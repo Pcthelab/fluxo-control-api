@@ -713,7 +713,7 @@ export default function App() {
 
                                     <label className="field">
                                         <span>Data</span>
-                                        <input value={data} onChange={(e) => setData(e.target.value)} type="date" />
+                                        <input value={data} onChange={(e) => setData(e.target.value)} type="date" className={"dateInput"} />
                                     </label>
                                 </div>
 

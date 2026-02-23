@@ -582,3 +582,19 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   max-width: 100%;
   min-width: 0;
 }
+.dateInput{
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
+  box-sizing: border-box;
+}
+@supports (-webkit-touch-callout: none){
+  .dateInput{
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .modal{
+    overflow: hidden;
+  }
+}
