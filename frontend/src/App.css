@@ -966,3 +966,51 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     margin-left:0;
   }
 }
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+
+.right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+
+.menuBtn{
+  padding:12px 14px;
+  min-width:auto;
+}
+
+/* dropdown */
+.rightMenu{
+  position:relative;
+}
+
+.menuDropdown{
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  width:200px;
+  background:white;
+  border-radius:14px;
+  box-shadow:0 20px 40px rgba(0,0,0,.12);
+  overflow:hidden;
+  z-index:1000;
+}
+
+.menuItem{
+  width:100%;
+  padding:12px 14px;
+  border:0;
+  background:transparent;
+  text-align:left;
+  font-weight:700;
+}
+
+.menuItem:hover{
+  background:rgba(0,0,0,.05);
+}

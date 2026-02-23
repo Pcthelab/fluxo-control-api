@@ -457,14 +457,24 @@ export default function App() {
                                 </button>
                             </div>
                         </div>
+                    <div className="right">
+                        <button
+                            className="ghost"
+                            onClick={() => carregarDados()}
+                            disabled={loading}
+                        >
+                            {loading ? "Atualizando..." : "Atualizar"}
+                        </button>
 
+                        <button className="danger" onClick={sair}>
+                            Sair
+                        </button>
 
                         <div className="rightMenu">
                             <button
                                 className="ghost secondary menuBtn"
                                 type="button"
                                 onClick={() => setMenuOpen((v) => !v)}
-                                title="Menu"
                             >
                                 ☰
                             </button>
@@ -473,18 +483,6 @@ export default function App() {
                                 <div className="menuDropdown">
                                     <button
                                         className="menuItem"
-                                        type="button"
-                                        onClick={() => {
-                                            setView("home");
-                                            setMenuOpen(false);
-                                        }}
-                                    >
-                                        Home
-                                    </button>
-
-                                    <button
-                                        className="menuItem"
-                                        type="button"
                                         onClick={() => {
                                             setView("dash");
                                             setMenuOpen(false);
@@ -495,7 +493,6 @@ export default function App() {
 
                                     <button
                                         className="menuItem"
-                                        type="button"
                                         onClick={() => {
                                             exportarCSV();
                                             setMenuOpen(false);
@@ -506,6 +503,7 @@ export default function App() {
                                 </div>
                             ) : null}
                         </div>
+                    </div>
                     </header>
 
                 {msg ? <div className="msg wide">{msg}</div> : null}
