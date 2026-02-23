@@ -619,3 +619,27 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   max-width: calc(100vw - 24px);
   overflow: hidden;
 }
+
+.modalOverlay{
+  animation: fadeIn .2s ease;
+}
+
+.modal{
+  animation: slideUp .25s ease;
+}
+
+@keyframes fadeIn{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
+
+@keyframes slideUp{
+  from{
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
