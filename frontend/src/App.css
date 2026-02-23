@@ -779,3 +779,46 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     flex:1;
   }
 }
+
+.metaHeader{
+  align-items: flex-start;
+}
+
+.metaRight{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:flex-end;
+}
+
+.metaLabel{
+  font-size:12px;
+  font-weight:800;
+  color: rgba(15,26,20,.60);
+}
+
+.metaInput{
+  width: 130px;
+  text-align: right;
+  font-weight: 950;
+  letter-spacing: -.3px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.85);
+}
+
+
+@media (max-width: 520px){
+  .metaHeader{
+    flex-direction: column;
+    gap: 12px;
+  }
+  .metaRight{
+    width: 100%;
+    justify-content: space-between;
+  }
+  .metaInput{
+    width: 160px;
+  }
+}

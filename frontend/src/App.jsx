@@ -489,8 +489,8 @@ export default function App() {
                     </div>
                 </section>
 
-                <section className="card listCard" style={{ marginBottom: 16 }}>
-                    <div className="listHeader" style={{ alignItems: "center" }}>
+                <section className="card listCard metaCard" style={{ marginBottom: 16 }}>
+                    <div className="listHeader metaHeader">
                         <div>
                             <div className="h2">Meta do mês</div>
                             <div className="subtitle">
@@ -499,11 +499,10 @@ export default function App() {
                                     : `Meta para: ${mesLabel(mesRef)}`}
                             </div>
                         </div>
-
-                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                            <span className="kpiLabel" style={{ fontSize: 12 }}>Meta</span>
+                        <div className="metaRight">
+                            <span className="metaLabel">Meta</span>
                             <input
-                                style={{ width: 140 }}
+                                className="metaInput"
                                 value={metaMensal}
                                 onChange={(e) => setMetaMensal(Number(String(e.target.value).replace(/[^\d]/g, "")))}
                                 inputMode="numeric"
