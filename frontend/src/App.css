@@ -822,3 +822,117 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     width: 160px;
   }
 }
+
+/* ===== Resumo compacto (3 em 1) ===== */
+.summaryCard{
+  padding: 16px;
+}
+
+.summaryRow{
+  display:flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.summaryLabel{
+  font-weight: 900;
+  color: rgba(15,26,20,.60);
+  font-size: 12px;
+  letter-spacing: .2px;
+}
+
+.summaryValue{
+  font-weight: 950;
+  font-size: 22px;
+  letter-spacing: -.5px;
+}
+
+.summaryValue.pos{ color:#138a49; }
+.summaryValue.neg{ color:#b3202a; }
+
+.summaryDivider{
+  height: 1px;
+  background: rgba(20,40,30,.10);
+  margin: 12px 0;
+}
+
+.summaryGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.summaryMini{
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(20,40,30,.10);
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.summaryMiniLabel{
+  font-weight: 850;
+  color: rgba(15,26,20,.60);
+  font-size: 12px;
+}
+
+.summaryMiniValue{
+  margin-top: 6px;
+  font-weight: 950;
+  font-size: 18px;
+  letter-spacing: -.4px;
+}
+
+.summaryMiniValue.pos{ color:#138a49; }
+.summaryMiniValue.neg{ color:#b3202a; }
+
+@media (max-width: 520px){
+  .summaryValue{ font-size: 20px; }
+  .summaryMiniValue{ font-size: 16px; }
+}
+
+
+.menuBtn{
+  width: 44px;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.menuDropdown{
+  position: absolute;
+  right: 64px; /* fica antes do Sair */
+  top: 52px;
+  width: 180px;
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(20,40,30,.12);
+  border-radius: 16px;
+  box-shadow: 0 18px 55px rgba(0,0,0,.10);
+  backdrop-filter: blur(12px);
+  padding: 8px;
+  z-index: 50;
+}
+
+.menuItem{
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: 10px 10px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  color: rgba(15,26,20,.90);
+}
+
+.menuItem:hover{
+  background: rgba(0,0,0,.06);
+}
+
+
+@media (max-width: 520px){
+  .menuDropdown{
+    right: 0;
+    top: 54px;
+    width: 190px;
+  }
+}

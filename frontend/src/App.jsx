@@ -30,7 +30,6 @@ function todayISO() {
     return `${yyyy}-${mm}-${dd}`;
 }
 
-
 function mesLabel(yyyyMM) {
     if (!yyyyMM || yyyyMM.length !== 7) return yyyyMM || "";
     const [y, m] = yyyyMM.split("-");
@@ -46,13 +45,9 @@ function horaMin(d) {
     return `${hh}:${mm}`;
 }
 
-
 function sanitizeMoneyInput(raw) {
     const s = String(raw ?? "");
-
-
     const cleaned = s.replace(/[^\d.,]/g, "");
-
 
     let out = "";
     let sepUsed = false;
@@ -67,12 +62,8 @@ function sanitizeMoneyInput(raw) {
         }
     }
 
-
     out = out.replace(/^[.,]/, "");
-
-
     if (out.length > 15) out = out.slice(0, 15);
-
     return out;
 }
 
@@ -82,7 +73,10 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState("");
 
+    // ✅ menu (substitui botão dashboard)
+    const [menuOpen, setMenuOpen] = useState(false);
 
+    // ✅ meta mensal (localStorage)
     const [metaMensal, setMetaMensal] = useState(() => {
         const v = localStorage.getItem("metaMensal");
         return v ? Number(v) : 2000;
@@ -92,14 +86,13 @@ export default function App() {
         localStorage.setItem("metaMensal", String(metaMensal || 0));
     }, [metaMensal]);
 
-
+    // auth
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-
     const [logged, setLogged] = useState(!!getToken());
 
-
+    // home data
     const [resumo, setResumo] = useState({ saldo: 0, receitas: 0, despesas: 0 });
     const [lancamentos, setLancamentos] = useState([]);
     const [lastUpdated, setLastUpdated] = useState(null);
@@ -133,7 +126,7 @@ export default function App() {
         return { receitas, despesas, saldo: receitas - despesas };
     }, [mesRef, resumo, lancamentosFiltrados]);
 
-
+    // modal
     const [open, setOpen] = useState(false);
     const [editId, setEditId] = useState(null);
     const [tipo, setTipo] = useState("DESPESA");
@@ -155,7 +148,6 @@ export default function App() {
 
     async function carregarDados({ silent = false } = {}) {
         if (!silent) setMsg("");
-
 
         const token = getToken();
         if (!token) {
@@ -179,10 +171,7 @@ export default function App() {
             setLancamentos(Array.isArray(list) ? list : []);
             ok = true;
         } catch (e) {
-
-            if (!getToken()) {
-                setLogged(false);
-            }
+            if (!getToken()) setLogged(false);
             setMsg(e?.message || "Erro ao carregar");
         } finally {
             setLoading(false);
@@ -192,7 +181,7 @@ export default function App() {
 
     useEffect(() => {
         if (logged) carregarDados({ silent: true });
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [logged]);
 
     async function onLogin(e) {
@@ -241,6 +230,7 @@ export default function App() {
         setLastUpdated(null);
         resetForm();
         setOpen(false);
+        setMenuOpen(false);
     }
 
     function exportarCSV() {
@@ -339,9 +329,7 @@ export default function App() {
             fecharModal();
             await carregarDados({ silent: true });
         } catch (err) {
-            if (!getToken()) {
-                setLogged(false);
-            }
+            if (!getToken()) setLogged(false);
             setMsg(err?.message || (editId ? "Não consegui salvar edição." : "Não consegui criar lançamento."));
         } finally {
             setLoading(false);
@@ -352,7 +340,6 @@ export default function App() {
         const id = l?.id;
         if (!id) return;
 
-
         const ok = window.confirm(`Excluir "${l?.descricao || "lançamento"}"?`);
         if (!ok) return;
 
@@ -362,16 +349,14 @@ export default function App() {
             await api(`/api/lancamentos/${id}`, "DELETE");
             await carregarDados({ silent: true });
         } catch (err) {
-            if (!getToken()) {
-                setLogged(false);
-            }
+            if (!getToken()) setLogged(false);
             setMsg(err?.message || "Não consegui deletar.");
         } finally {
             setLoading(false);
         }
     }
 
-
+    // ---------- UI ----------
     if (!logged) {
         return (
             <div className="page">
@@ -405,13 +390,7 @@ export default function App() {
                             </label>
                             <label className="field">
                                 <span>Senha</span>
-                                <input
-                                    value={senha}
-                                    onChange={(e) => setSenha(e.target.value)}
-                                    placeholder="••••••••"
-                                    type="password"
-                                    autoComplete="current-password"
-                                />
+                                <input value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="••••••••" type="password" autoComplete="current-password" />
                             </label>
 
                             <button className="primary" disabled={loading}>
@@ -459,13 +438,53 @@ export default function App() {
                         </div>
                     </div>
 
-                    <div className="right">
+                    <div className="right" style={{ position: "relative" }}>
                         <button className="ghost" onClick={() => carregarDados()} disabled={loading} title="Recarregar dados">
                             {loading ? "Atualizando..." : "Atualizar"}
                         </button>
-                        <button className="ghost secondary" onClick={() => setView(view === "home" ? "dash" : "home")}>
-                            {view === "home" ? "Dashboard" : "Voltar"}
+
+                        {/* ✅ Menu (substitui o botão Dashboard) */}
+                        <button className="ghost secondary menuBtn" type="button" onClick={() => setMenuOpen((v) => !v)} title="Menu">
+                            ☰
                         </button>
+
+                        {menuOpen ? (
+                            <div className="menuDropdown" onMouseDown={(e) => e.preventDefault()}>
+                                <button
+                                    className="menuItem"
+                                    type="button"
+                                    onClick={() => {
+                                        setView("home");
+                                        setMenuOpen(false);
+                                    }}
+                                >
+                                    Home
+                                </button>
+
+                                <button
+                                    className="menuItem"
+                                    type="button"
+                                    onClick={() => {
+                                        setView("dash");
+                                        setMenuOpen(false);
+                                    }}
+                                >
+                                    Dashboard
+                                </button>
+
+                                <button
+                                    className="menuItem"
+                                    type="button"
+                                    onClick={() => {
+                                        exportarCSV();
+                                        setMenuOpen(false);
+                                    }}
+                                >
+                                    Exportar CSV
+                                </button>
+                            </div>
+                        ) : null}
+
                         <button className="danger" onClick={sair}>
                             Sair
                         </button>
@@ -474,31 +493,38 @@ export default function App() {
 
                 {msg ? <div className="msg wide">{msg}</div> : null}
 
-                <section className="grid3">
-                    <div className="kpi">
-                        <div className="kpiLabel">Saldo</div>
-                        <div className="kpiValue">{brl(resumoExibido.saldo)}</div>
+                {/* ✅ Resumo compacto (3 em 1 card) */}
+                <section className="card summaryCard">
+                    <div className="summaryRow">
+                        <div className="summaryLabel">Saldo</div>
+                        <div className={"summaryValue " + (resumoExibido.saldo < 0 ? "neg" : "pos")}>{brl(resumoExibido.saldo)}</div>
                     </div>
-                    <div className="kpi">
-                        <div className="kpiLabel">Receitas</div>
-                        <div className="kpiValue pos">{brl(resumoExibido.receitas)}</div>
-                    </div>
-                    <div className="kpi">
-                        <div className="kpiLabel">Despesas</div>
-                        <div className="kpiValue neg">{brl(resumoExibido.despesas)}</div>
+
+                    <div className="summaryDivider" />
+
+                    <div className="summaryGrid">
+                        <div className="summaryMini">
+                            <div className="summaryMiniLabel">Receitas</div>
+                            <div className="summaryMiniValue pos">{brl(resumoExibido.receitas)}</div>
+                        </div>
+
+                        <div className="summaryMini">
+                            <div className="summaryMiniLabel">Despesas</div>
+                            <div className="summaryMiniValue neg">{brl(resumoExibido.despesas)}</div>
+                        </div>
                     </div>
                 </section>
 
-                <section className="card listCard metaCard" style={{ marginBottom: 16 }}>
+                {/* ✅ Meta do mês */}
+                <section className="card listCard metaCard" style={{ marginTop: 14, marginBottom: 16 }}>
                     <div className="listHeader metaHeader">
                         <div>
                             <div className="h2">Meta do mês</div>
                             <div className="subtitle">
-                                {mesRef === "ALL"
-                                    ? "Dica: selecione um mês pra meta fazer mais sentido"
-                                    : `Meta para: ${mesLabel(mesRef)}`}
+                                {mesRef === "ALL" ? "Dica: selecione um mês pra meta fazer mais sentido" : `Meta para: ${mesLabel(mesRef)}`}
                             </div>
                         </div>
+
                         <div className="metaRight">
                             <span className="metaLabel">Meta</span>
                             <input
@@ -542,44 +568,41 @@ export default function App() {
                     })()}
                 </section>
 
+                {/* ✅ Conteúdo principal */}
                 {view === "home" ? (
                     <section className="card listCard">
-                        <div className="listHeader">
-                            <div>
-                                <div className="h2">Últimos lançamentos</div>
-                                <div className="subtitle">
-                                    {mesRef === "ALL" ? "Toque no + pra adicionar" : `Filtrado: ${mesLabel(mesRef)}`}
-                                </div>
-                            </div>
+                        <div>
+                            <div className="h2">Últimos lançamentos</div>
+                            <div className="subtitle">Toque no + pra adicionar</div>
+                        </div>
 
-                            <div className="listActions">
-                                <select
-                                    className="monthSelect"
-                                    value={mesRef}
-                                    onChange={(e) => {
-                                        setMesRef(e.target.value);
-                                        setShowAll(false);
-                                    }}
-                                    title="Filtrar por mês"
-                                >
-                                    <option value="ALL">Todos</option>
-                                    {mesesDisponiveis.map((m) => (
-                                        <option key={m} value={m}>
-                                            {mesLabel(m)}
-                                        </option>
-                                    ))}
-                                </select>
+                        <div className="listActions">
+                            <select
+                                className="monthSelect"
+                                value={mesRef}
+                                onChange={(e) => {
+                                    setMesRef(e.target.value);
+                                    setShowAll(false);
+                                }}
+                                title="Filtrar por mês"
+                            >
+                                <option value="ALL">Todos</option>
+                                {mesesDisponiveis.map((m) => (
+                                    <option key={m} value={m}>
+                                        {mesLabel(m)}
+                                    </option>
+                                ))}
+                            </select>
 
-                                <button className="addInline" type="button" onClick={abrirCriacao} title="Novo lançamento">
-                                    +
+                            <button className="addInline" type="button" onClick={abrirCriacao} title="Novo lançamento">
+                                +
+                            </button>
+
+                            {lancamentosFiltrados.length > 8 ? (
+                                <button className="ghost" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
+                                    {showAll ? "Mostrar menos" : "Ver todos"}
                                 </button>
-
-                                {lancamentosFiltrados.length > 8 ? (
-                                    <button className="ghost" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
-                                        {showAll ? "Mostrar menos" : "Ver todos"}
-                                    </button>
-                                ) : null}
-                            </div>
+                            ) : null}
                         </div>
 
                         {lancamentosFiltrados.length === 0 ? (
@@ -621,7 +644,7 @@ export default function App() {
                         <div className="listHeader" style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
                             <div>
                                 <div className="h2">Dashboard</div>
-                                <div className="subtitle">Top despesas + exportação</div>
+                                <div className="subtitle">Top despesas</div>
                             </div>
                             <div>
                                 <button className="ghost" onClick={exportarCSV}>
@@ -672,11 +695,7 @@ export default function App() {
                             </div>
 
                             <div className="segmented big">
-                                <button
-                                    type="button"
-                                    className={tipo === "DESPESA" ? "seg active dangerSeg" : "seg"}
-                                    onClick={() => setTipo("DESPESA")}
-                                >
+                                <button type="button" className={tipo === "DESPESA" ? "seg active dangerSeg" : "seg"} onClick={() => setTipo("DESPESA")}>
                                     Despesa
                                 </button>
                                 <button type="button" className={tipo === "RECEITA" ? "seg active okSeg" : "seg"} onClick={() => setTipo("RECEITA")}>
@@ -704,12 +723,7 @@ export default function App() {
                                 <div className="row2">
                                     <label className="field">
                                         <span>Valor</span>
-                                        <input
-                                            value={valor}
-                                            onChange={(e) => setValor(sanitizeMoneyInput(e.target.value))}
-                                            placeholder="ex: 35,90"
-                                            inputMode="decimal"
-                                        />
+                                        <input value={valor} onChange={(e) => setValor(sanitizeMoneyInput(e.target.value))} placeholder="ex: 35,90" inputMode="decimal" />
                                     </label>
 
                                     <label className="field">
