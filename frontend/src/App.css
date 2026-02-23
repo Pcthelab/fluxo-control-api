@@ -195,13 +195,14 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
 .topbar .left{ display:flex; align-items:center; gap:12px; }
 .topbar .right{ display:flex; gap:10px; align-items:center; }
 
-.ghost{
+.ghost:hover{
   border:1px solid var(--stroke);
-  background: rgba(255,255,255,.70);
+  background: rgba(255,255,255,.95);
   padding:10px 12px;
   border-radius: 14px;
   font-weight:900;
   cursor:pointer;
+  color: var(--text);
 }
 .danger{
   border:0;
@@ -328,15 +329,15 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
 
 .fab{
   position: fixed;
-  right: 22px;
-  bottom: 22px;
-  width: 56px;
-  height: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
   border-radius: 18px;
   border: 0;
   color: white;
   font-size: 30px;
-  line-height: 0;
   font-weight: 900;
   cursor: pointer;
   background: linear-gradient(135deg, var(--green), var(--green2));
