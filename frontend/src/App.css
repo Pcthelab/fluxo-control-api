@@ -573,6 +573,36 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   align-items: center;
 }
 
+.listActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:flex-end;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 520px){
+  .listActions{
+    width:100%;
+    justify-content:space-between;
+  }
+
+  .monthSelect{
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .addInline{
+    flex: 0 0 auto;
+  }
+
+
+  .verTodosBtn{
+    order: 3;
+    width: 100%;
+  }
+}
+
 .headerActions{
   flex-wrap: wrap;
   max-width: 100%;
