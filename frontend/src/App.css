@@ -265,10 +265,12 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   justify-content:space-between;
   align-items:center;
   gap:12px;
-  padding: 12px 12px;
+  padding: 12px 14px;
   border-radius: 16px;
   border: 1px solid var(--stroke);
   background: rgba(255,255,255,.72);
+
+  flex-wrap: wrap;
 }
 .rowTitle{ font-weight:900; }
 .rowMeta{ display:flex; align-items:center; gap:8px; color: var(--muted); font-weight:700; font-size:12px; margin-top:4px; }
@@ -285,6 +287,7 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   display:flex;
   align-items:center;
   gap:10px;
+  flex-shrink:0;
 }
 .money{
   font-weight:950;
@@ -389,8 +392,17 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
 
 @media (max-width: 820px){
   .grid3{ grid-template-columns: 1fr; }
-  .money{ min-width: auto; }
   .row2{ grid-template-columns: 1fr; }
+
+  .money{
+    min-width:auto;
+  }
+
+  .rowRight{
+    width:100%;
+    justify-content:flex-end;
+    margin-top:8px;
+  }
 }
 
 /* --- Step 3: mobile + filtros + editar --- */
