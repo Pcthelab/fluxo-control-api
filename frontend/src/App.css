@@ -32,7 +32,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:28px 16px;
+  padding:28px 16px 110px 16px;
 }
 
 .shell{
@@ -329,19 +329,20 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
 
 .fab{
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 20px;
-  width: 60px;
-  height: 60px;
+  right: 18px;
+  bottom: 18px;
+  width: 56px;
+  height: 56px;
   border-radius: 18px;
   border: 0;
   color: white;
   font-size: 30px;
+  line-height: 0;
   font-weight: 900;
   cursor: pointer;
   background: linear-gradient(135deg, var(--green), var(--green2));
   box-shadow: 0 22px 55px rgba(46,204,113,.28);
+  z-index: 999;
 }
 
 .modalOverlay{
