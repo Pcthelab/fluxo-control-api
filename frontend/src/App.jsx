@@ -533,7 +533,7 @@ export default function App() {
                 <section className="card listCard metaCard" style={{ marginTop: 14, marginBottom: 16 }}>
                     <div className="listHeader metaHeader">
                         <div>
-                            <div className="h2">Meta do mês</div>
+                            <div className="h2">Meta de gastos do mês</div>
                             <div className="subtitle">{mesRef === "ALL" ? "Selecione um mês pra meta fazer mais sentido" : `Meta para: ${mesLabel(mesRef)}`}</div>
                         </div>
 
