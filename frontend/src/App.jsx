@@ -563,6 +563,9 @@ export default function App() {
                                 ))}
                             </select>
 
+                            <button className="addInline" type="button" onClick={abrirCriacao} title="Novo lançamento">
+                                +
+                            </button>
 
                             {lancamentosFiltrados.length > 8 ? (
                                 <button className="ghost" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
