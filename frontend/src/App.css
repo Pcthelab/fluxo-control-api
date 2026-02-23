@@ -473,7 +473,7 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   background: linear-gradient(135deg, var(--red), var(--red2));
 }
 
-/* ===== Modal ===== */
+
 .modalOverlay{
   position: fixed;
   inset: 0;
@@ -642,4 +642,52 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   }
   .topbar .left{ flex: 1; min-width: 0; }
   .topbar .right{ flex: 0 0 auto; }
+}
+
+
+.listHeaderTop{
+  align-items: flex-start;
+}
+
+.listTitle{
+  min-width: 0;
+}
+
+.listActionsRight{
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
+@media (max-width: 520px){
+  .listHeaderTop{
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .listTitle{
+    max-width: 46%;
+  }
+
+  .listActionsRight{
+    width: auto;
+    margin-left: auto;
+    justify-content: flex-end;
+  }
+}
+.listActions{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.monthSelectCompact{
+  width: 120px;
+  max-width: 42vw;
+}
+
+.listFooter{
+  margin-top: 12px;
+  display:flex;
+  justify-content:flex-end;
 }

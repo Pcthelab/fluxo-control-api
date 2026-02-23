@@ -586,7 +586,7 @@ export default function App() {
 
                             <div className="listActions">
                                 <select
-                                    className="monthSelect"
+                                    className="monthSelect monthSelectCompact"
                                     value={mesRef}
                                     onChange={(e) => {
                                         setMesRef(e.target.value);
@@ -605,14 +605,16 @@ export default function App() {
                                 <button className="addInline" type="button" onClick={abrirCriacao} title="Novo lançamento">
                                     +
                                 </button>
-
-                                {lancamentosFiltrados.length > 8 ? (
-                                    <button className="ghost" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
-                                        {showAll ? "Mostrar menos" : "Ver todos"}
-                                    </button>
-                                ) : null}
                             </div>
                         </div>
+
+                        {lancamentosFiltrados.length > 8 ? (
+                            <div className="listFooter">
+                                <button className="ghost verTodosBtn" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
+                                    {showAll ? "Mostrar menos" : "Ver todos"}
+                                </button>
+                            </div>
+                        ) : null}
 
                         {lancamentosFiltrados.length === 0 ? (
                             <div className="empty">
