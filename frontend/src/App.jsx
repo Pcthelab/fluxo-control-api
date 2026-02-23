@@ -48,7 +48,6 @@ function horaMin(d) {
 function sanitizeMoneyInput(raw) {
     const s = String(raw ?? "");
     const cleaned = s.replace(/[^\d.,]/g, "");
-
     let out = "";
     let sepUsed = false;
 
@@ -61,7 +60,6 @@ function sanitizeMoneyInput(raw) {
             out += ch;
         }
     }
-
     out = out.replace(/^[.,]/, "");
     if (out.length > 15) out = out.slice(0, 15);
     return out;
@@ -73,10 +71,10 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState("");
 
-    // ✅ menu (substitui botão dashboard)
+    // menu (substitui botões)
     const [menuOpen, setMenuOpen] = useState(false);
 
-    // ✅ meta mensal (localStorage)
+    // meta mensal (localStorage)
     const [metaMensal, setMetaMensal] = useState(() => {
         const v = localStorage.getItem("metaMensal");
         return v ? Number(v) : 2000;
@@ -429,48 +427,78 @@ export default function App() {
     return (
         <div className="page">
             <div className="shell">
-
                 <header className="topbar">
                     <div className="left">
                         <div className="appBadge small">FC</div>
 
                         <div className="brandSmall">
-                            <span className="brandA">Fluxo</span>{" "}
-                            <span className="brandB">Control</span>
-                            <div className="subtitle small">
-                                {lastUpdated ? `Atualizado ${horaMin(lastUpdated)}` : "Bem-vindo"}
-                            </div>
+                            <span className="brandA">Fluxo</span> <span className="brandB">Control</span>
+                            <div className="subtitle small">{lastUpdated ? `Atualizado ${horaMin(lastUpdated)}` : "Bem-vindo"}</div>
                         </div>
                     </div>
 
                     <div className="right">
                         <div className="rightMenu">
-                            <button
-                                className="ghost secondary menuBtn"
-                                type="button"
-                                onClick={() => setMenuOpen((v) => !v)}
-                                title="Menu"
-                            >
+                            <button className="ghost secondary menuBtn" type="button" onClick={() => setMenuOpen((v) => !v)} title="Menu">
                                 ☰
                             </button>
 
                             {menuOpen ? (
                                 <div className="menuDropdown">
-                                    <button className="menuItem" type="button" onClick={() => { carregarDados(); setMenuOpen(false); }}>
+                                    <button
+                                        className="menuItem"
+                                        type="button"
+                                        onClick={() => {
+                                            carregarDados();
+                                            setMenuOpen(false);
+                                        }}
+                                    >
                                         Atualizar
                                     </button>
 
-                                    <button className="menuItem" type="button" onClick={() => { setView("dash"); setMenuOpen(false); }}>
+                                    <button
+                                        className="menuItem"
+                                        type="button"
+                                        onClick={() => {
+                                            setView("home");
+                                            setMenuOpen(false);
+                                        }}
+                                    >
+                                        Home
+                                    </button>
+
+                                    <button
+                                        className="menuItem"
+                                        type="button"
+                                        onClick={() => {
+                                            setView("dash");
+                                            setMenuOpen(false);
+                                        }}
+                                    >
                                         Dashboard
                                     </button>
 
-                                    <button className="menuItem" type="button" onClick={() => { exportarCSV(); setMenuOpen(false); }}>
+                                    <button
+                                        className="menuItem"
+                                        type="button"
+                                        onClick={() => {
+                                            exportarCSV();
+                                            setMenuOpen(false);
+                                        }}
+                                    >
                                         Exportar CSV
                                     </button>
 
                                     <div className="menuDivider" />
 
-                                    <button className="menuItem dangerItem" type="button" onClick={() => { sair(); setMenuOpen(false); }}>
+                                    <button
+                                        className="menuItem dangerItem"
+                                        type="button"
+                                        onClick={() => {
+                                            sair();
+                                            setMenuOpen(false);
+                                        }}
+                                    >
                                         Sair
                                     </button>
                                 </div>
@@ -480,7 +508,6 @@ export default function App() {
                 </header>
 
                 {msg ? <div className="msg wide">{msg}</div> : null}
-
 
                 <section className="card summaryCard">
                     <div className="summaryRow">
@@ -503,12 +530,11 @@ export default function App() {
                     </div>
                 </section>
 
-                {/* ✅ META DO MÊS */}
                 <section className="card listCard metaCard" style={{ marginTop: 14, marginBottom: 16 }}>
                     <div className="listHeader metaHeader">
                         <div>
                             <div className="h2">Meta do mês</div>
-                            <div className="subtitle">{mesRef === "ALL" ? "Dica: selecione um mês pra meta fazer mais sentido" : `Meta para: ${mesLabel(mesRef)}`}</div>
+                            <div className="subtitle">{mesRef === "ALL" ? "Selecione um mês pra meta fazer mais sentido" : `Meta para: ${mesLabel(mesRef)}`}</div>
                         </div>
 
                         <div className="metaRight">
@@ -543,52 +569,49 @@ export default function App() {
                                 </div>
 
                                 <div className="subtitle" style={{ marginTop: 8 }}>
-                                    {meta > 0
-                                        ? estourou
-                                            ? `Você passou da meta em ${brl(gasto - meta)}`
-                                            : `Faltam ${brl(Math.max(0, meta - gasto))} pra bater a meta`
-                                        : "Defina uma meta (ex: 2000) pra ver a barra."}
+                                    {meta > 0 ? (estourou ? `Você passou da meta em ${brl(gasto - meta)}` : `Faltam ${brl(Math.max(0, meta - gasto))} pra bater a meta`) : "Defina uma meta (ex: 2000) pra ver a barra."}
                                 </div>
                             </div>
                         );
                     })()}
                 </section>
 
-                {/* ✅ CONTEÚDO PRINCIPAL */}
                 {view === "home" ? (
                     <section className="card listCard">
-                        <div>
-                            <div className="h2">Últimos lançamentos</div>
-                            <div className="subtitle">Toque no + pra adicionar</div>
-                        </div>
+                        <div className="listHeader">
+                            <div>
+                                <div className="h2">Últimos lançamentos</div>
+                                <div className="subtitle">Toque no + pra adicionar</div>
+                            </div>
 
-                        <div className="listActions">
-                            <select
-                                className="monthSelect"
-                                value={mesRef}
-                                onChange={(e) => {
-                                    setMesRef(e.target.value);
-                                    setShowAll(false);
-                                }}
-                                title="Filtrar por mês"
-                            >
-                                <option value="ALL">Todos</option>
-                                {mesesDisponiveis.map((m) => (
-                                    <option key={m} value={m}>
-                                        {mesLabel(m)}
-                                    </option>
-                                ))}
-                            </select>
+                            <div className="listActions">
+                                <select
+                                    className="monthSelect"
+                                    value={mesRef}
+                                    onChange={(e) => {
+                                        setMesRef(e.target.value);
+                                        setShowAll(false);
+                                    }}
+                                    title="Filtrar por mês"
+                                >
+                                    <option value="ALL">Todos</option>
+                                    {mesesDisponiveis.map((m) => (
+                                        <option key={m} value={m}>
+                                            {mesLabel(m)}
+                                        </option>
+                                    ))}
+                                </select>
 
-                            <button className="addInline" type="button" onClick={abrirCriacao} title="Novo lançamento">
-                                +
-                            </button>
-
-                            {lancamentosFiltrados.length > 8 ? (
-                                <button className="ghost" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
-                                    {showAll ? "Mostrar menos" : "Ver todos"}
+                                <button className="addInline" type="button" onClick={abrirCriacao} title="Novo lançamento">
+                                    +
                                 </button>
-                            ) : null}
+
+                                {lancamentosFiltrados.length > 8 ? (
+                                    <button className="ghost" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
+                                        {showAll ? "Mostrar menos" : "Ver todos"}
+                                    </button>
+                                ) : null}
+                            </div>
                         </div>
 
                         {lancamentosFiltrados.length === 0 ? (
@@ -610,7 +633,9 @@ export default function App() {
                                         </div>
 
                                         <div className="rowRight">
-                                            <div className={l.tipo === "RECEITA" ? "money pos" : "money neg"}>{l.tipo === "RECEITA" ? "+" : "-"} {brl(l.valor)}</div>
+                                            <div className={l.tipo === "RECEITA" ? "money pos" : "money neg"}>
+                                                {l.tipo === "RECEITA" ? "+" : "-"} {brl(l.valor)}
+                                            </div>
                                             <button className="edit" onClick={() => abrirEdicao(l)} title="Editar">
                                                 ✎
                                             </button>
@@ -625,16 +650,15 @@ export default function App() {
                     </section>
                 ) : (
                     <section className="card listCard">
-                        <div className="listHeader" style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                        <div className="listHeader">
                             <div>
                                 <div className="h2">Dashboard</div>
                                 <div className="subtitle">Top despesas</div>
                             </div>
-                            <div>
-                                <button className="ghost" onClick={exportarCSV}>
-                                    Exportar CSV
-                                </button>
-                            </div>
+
+                            <button className="ghost" onClick={exportarCSV}>
+                                Exportar CSV
+                            </button>
                         </div>
 
                         {topDespesas.length === 0 ? (
