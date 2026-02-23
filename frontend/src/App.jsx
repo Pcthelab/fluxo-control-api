@@ -429,53 +429,28 @@ export default function App() {
     return (
         <div className="page">
             <div className="shell">
+                {/* ✅ TOPBAR: SEM DUPLICAR BOTÕES */}
                 <header className="topbar">
-                        <div className="left">
-                            <div className="appBadge small">FC</div>
+                    <div className="left">
+                        <div className="appBadge small">FC</div>
 
-                            <div className="brandSmall">
-                                <span className="brandA">Fluxo</span>{" "}
-                                <span className="brandB">Control</span>
-                                <div className="subtitle small">
-                                    {lastUpdated ? `Atualizado ${horaMin(lastUpdated)}` : "Bem-vindo"}
-                                </div>
-                            </div>
-
-
-                            <div className="leftActions">
-                                <button
-                                    className="ghost"
-                                    onClick={() => carregarDados()}
-                                    disabled={loading}
-                                    title="Recarregar dados"
-                                >
-                                    {loading ? "Atualizando..." : "Atualizar"}
-                                </button>
-
-                                <button className="danger" onClick={sair}>
-                                    Sair
-                                </button>
-                            </div>
+                        <div className="brandSmall">
+                            <span className="brandA">Fluxo</span> <span className="brandB">Control</span>
+                            <div className="subtitle small">{lastUpdated ? `Atualizado ${horaMin(lastUpdated)}` : "Bem-vindo"}</div>
                         </div>
+                    </div>
+
                     <div className="right">
-                        <button
-                            className="ghost"
-                            onClick={() => carregarDados()}
-                            disabled={loading}
-                        >
+                        <button className="ghost" onClick={() => carregarDados()} disabled={loading} title="Recarregar dados">
                             {loading ? "Atualizando..." : "Atualizar"}
                         </button>
 
-                        <button className="danger" onClick={sair}>
+                        <button className="danger" onClick={sair} title="Sair">
                             Sair
                         </button>
 
                         <div className="rightMenu">
-                            <button
-                                className="ghost secondary menuBtn"
-                                type="button"
-                                onClick={() => setMenuOpen((v) => !v)}
-                            >
+                            <button className="ghost secondary menuBtn" type="button" onClick={() => setMenuOpen((v) => !v)} title="Menu">
                                 ☰
                             </button>
 
@@ -483,6 +458,7 @@ export default function App() {
                                 <div className="menuDropdown">
                                     <button
                                         className="menuItem"
+                                        type="button"
                                         onClick={() => {
                                             setView("dash");
                                             setMenuOpen(false);
@@ -493,6 +469,7 @@ export default function App() {
 
                                     <button
                                         className="menuItem"
+                                        type="button"
                                         onClick={() => {
                                             exportarCSV();
                                             setMenuOpen(false);
@@ -500,15 +477,26 @@ export default function App() {
                                     >
                                         Exportar CSV
                                     </button>
+
+                                    <button
+                                        className="menuItem"
+                                        type="button"
+                                        onClick={() => {
+                                            setView("home");
+                                            setMenuOpen(false);
+                                        }}
+                                    >
+                                        Home
+                                    </button>
                                 </div>
                             ) : null}
                         </div>
                     </div>
-                    </header>
+                </header>
 
                 {msg ? <div className="msg wide">{msg}</div> : null}
 
-
+                {/* ✅ CARD RESUMO COMPACTO */}
                 <section className="card summaryCard">
                     <div className="summaryRow">
                         <div className="summaryLabel">Saldo</div>
@@ -530,14 +518,12 @@ export default function App() {
                     </div>
                 </section>
 
-
+                {/* ✅ META DO MÊS */}
                 <section className="card listCard metaCard" style={{ marginTop: 14, marginBottom: 16 }}>
                     <div className="listHeader metaHeader">
                         <div>
                             <div className="h2">Meta do mês</div>
-                            <div className="subtitle">
-                                {mesRef === "ALL" ? "Dica: selecione um mês pra meta fazer mais sentido" : `Meta para: ${mesLabel(mesRef)}`}
-                            </div>
+                            <div className="subtitle">{mesRef === "ALL" ? "Dica: selecione um mês pra meta fazer mais sentido" : `Meta para: ${mesLabel(mesRef)}`}</div>
                         </div>
 
                         <div className="metaRight">
@@ -583,7 +569,7 @@ export default function App() {
                     })()}
                 </section>
 
-                {/* ✅ Conteúdo principal */}
+                {/* ✅ CONTEÚDO PRINCIPAL */}
                 {view === "home" ? (
                     <section className="card listCard">
                         <div>
@@ -639,9 +625,7 @@ export default function App() {
                                         </div>
 
                                         <div className="rowRight">
-                                            <div className={l.tipo === "RECEITA" ? "money pos" : "money neg"}>
-                                                {l.tipo === "RECEITA" ? "+" : "-"} {brl(l.valor)}
-                                            </div>
+                                            <div className={l.tipo === "RECEITA" ? "money pos" : "money neg"}>{l.tipo === "RECEITA" ? "+" : "-"} {brl(l.valor)}</div>
                                             <button className="edit" onClick={() => abrirEdicao(l)} title="Editar">
                                                 ✎
                                             </button>
