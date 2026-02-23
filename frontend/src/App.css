@@ -407,7 +407,6 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   }
 }
 
-/* --- Step 3: mobile + filtros + editar --- */
 .monthSelect{
   border: 1px solid rgba(0,0,0,.12);
   background: #fff;
@@ -441,13 +440,13 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   border-radius: 10px;
 }
 
-/* lista mais compacta */
+
 .row{ padding: 12px 14px; }
 .rowTitle{ font-size: 14px; }
 .rowMeta{ font-size: 12px; }
 .rowRight{ gap: 8px; }
 
-/* ✅ NOVO: “pills” com cor por tipo (sem perder layout branco) */
+
 .pillPos{
   border-color: rgba(46,204,113,.35);
   background: rgba(46,204,113,.10);
@@ -459,7 +458,7 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   color: rgba(150, 10, 10, .92);
 }
 
-/* ✅ NOVO: ações do modal (Cancelar + Salvar) */
+
 .modalActions{
   display:flex;
   gap:10px;
@@ -502,7 +501,7 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   transform: translateY(1px);
 }
 
-/* Responsivo */
+
 @media (max-width: 920px){
   .container{ padding: 18px 12px; }
   .topbar{
@@ -544,4 +543,24 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     background: linear-gradient(135deg, var(--green), var(--green2));
     box-shadow: 0 14px 35px rgba(46,204,113,.24);
   }
+}
+
+/* ✅ Meta do mês */
+.progress{
+  margin-top: 10px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.08);
+  overflow: hidden;
+}
+.progressBar{
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--green), var(--green2));
+  transition: width .35s ease;
+}
+.progress.danger .progressBar{
+  background: linear-gradient(135deg, var(--red), var(--red2));
 }

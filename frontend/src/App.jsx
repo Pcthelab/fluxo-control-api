@@ -82,6 +82,16 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState("");
 
+
+    const [metaMensal, setMetaMensal] = useState(() => {
+        const v = localStorage.getItem("metaMensal");
+        return v ? Number(v) : 2000; // meta padrão
+    });
+
+    useEffect(() => {
+        localStorage.setItem("metaMensal", String(metaMensal || 0));
+    }, [metaMensal]);
+
     // auth
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
@@ -477,6 +487,60 @@ export default function App() {
                         <div className="kpiLabel">Despesas</div>
                         <div className="kpiValue neg">{brl(resumoExibido.despesas)}</div>
                     </div>
+                </section>
+
+                <section className="card listCard" style={{ marginBottom: 16 }}>
+                    <div className="listHeader" style={{ alignItems: "center" }}>
+                        <div>
+                            <div className="h2">Meta do mês</div>
+                            <div className="subtitle">
+                                {mesRef === "ALL"
+                                    ? "Dica: selecione um mês pra meta fazer mais sentido"
+                                    : `Meta para: ${mesLabel(mesRef)}`}
+                            </div>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                            <span className="kpiLabel" style={{ fontSize: 12 }}>Meta</span>
+                            <input
+                                style={{ width: 140 }}
+                                value={metaMensal}
+                                onChange={(e) => setMetaMensal(Number(String(e.target.value).replace(/[^\d]/g, "")))}
+                                inputMode="numeric"
+                                placeholder="2000"
+                            />
+                        </div>
+                    </div>
+
+                    {(() => {
+                        const gasto = Number(resumoExibido.despesas || 0);
+                        const meta = Number(metaMensal || 0);
+                        const pct = meta > 0 ? Math.min(100, Math.round((gasto / meta) * 100)) : 0;
+                        const estourou = meta > 0 && gasto > meta;
+
+                        return (
+                            <div style={{ marginTop: 12 }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                                    <div className="kpiLabel">Gasto no período</div>
+                                    <div style={{ fontWeight: 900, color: estourou ? "#b3202a" : "#0f1a14" }}>
+                                        {brl(gasto)} {meta > 0 ? `(${pct}%)` : ""}
+                                    </div>
+                                </div>
+
+                                <div className={`progress ${estourou ? "danger" : ""}`}>
+                                    <div className="progressBar" style={{ width: `${pct}%` }} />
+                                </div>
+
+                                <div className="subtitle" style={{ marginTop: 8 }}>
+                                    {meta > 0
+                                        ? estourou
+                                            ? `Você passou da meta em ${brl(gasto - meta)}`
+                                            : `Faltam ${brl(Math.max(0, meta - gasto))} pra bater a meta`
+                                        : "Defina uma meta (ex: 2000) pra ver a barra."}
+                                </div>
+                            </div>
+                        );
+                    })()}
                 </section>
 
                 {view === "home" ? (
