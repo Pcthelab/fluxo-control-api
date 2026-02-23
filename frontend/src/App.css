@@ -382,6 +382,11 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap:12px;
+  width:100%;
+}
+
+.row2 > *{
+  min-width:0;
 }
 
 .footerWide{
@@ -562,6 +567,7 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
 .progress.danger .progressBar{
   background: linear-gradient(135deg, var(--red), var(--red2));
 }
+
 .listHeader{
   flex-wrap: wrap;
   align-items: center;
