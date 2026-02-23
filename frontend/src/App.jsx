@@ -30,7 +30,7 @@ function todayISO() {
     return `${yyyy}-${mm}-${dd}`;
 }
 
-// helper: "2026-02" -> "Fev/2026"
+
 function mesLabel(yyyyMM) {
     if (!yyyyMM || yyyyMM.length !== 7) return yyyyMM || "";
     const [y, m] = yyyyMM.split("-");
@@ -46,14 +46,14 @@ function horaMin(d) {
     return `${hh}:${mm}`;
 }
 
-// ✅ evita input zoado no valor (mantém só dígitos e 1 separador)
+
 function sanitizeMoneyInput(raw) {
     const s = String(raw ?? "");
 
-    // permite apenas números, vírgula e ponto
+
     const cleaned = s.replace(/[^\d.,]/g, "");
 
-    // mantém só o primeiro separador (vírgula OU ponto)
+
     let out = "";
     let sepUsed = false;
 
@@ -67,53 +67,53 @@ function sanitizeMoneyInput(raw) {
         }
     }
 
-    // evita começar com separador
+
     out = out.replace(/^[.,]/, "");
 
-    // limita tamanho pra não virar um monstro (opcional, mas ajuda)
+
     if (out.length > 15) out = out.slice(0, 15);
 
     return out;
 }
 
 export default function App() {
-    const [tab, setTab] = useState("login"); // login | cadastro
-    const [view, setView] = useState("home"); // home | dash
+    const [tab, setTab] = useState("login");
+    const [view, setView] = useState("home");
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState("");
 
 
     const [metaMensal, setMetaMensal] = useState(() => {
         const v = localStorage.getItem("metaMensal");
-        return v ? Number(v) : 2000; // meta padrão
+        return v ? Number(v) : 2000;
     });
 
     useEffect(() => {
         localStorage.setItem("metaMensal", String(metaMensal || 0));
     }, [metaMensal]);
 
-    // auth
+
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
     const [logged, setLogged] = useState(!!getToken());
 
-    // home data
+
     const [resumo, setResumo] = useState({ saldo: 0, receitas: 0, despesas: 0 });
     const [lancamentos, setLancamentos] = useState([]);
-    const [lastUpdated, setLastUpdated] = useState(null); // Date | null
+    const [lastUpdated, setLastUpdated] = useState(null);
 
-    const [mesRef, setMesRef] = useState("ALL"); // "ALL" ou "YYYY-MM"
-    const [showAll, setShowAll] = useState(false); // ✅ ver todos/mostrar menos
+    const [mesRef, setMesRef] = useState("ALL");
+    const [showAll, setShowAll] = useState(false);
 
     const mesesDisponiveis = useMemo(() => {
         const set = new Set();
         for (const l of lancamentos) {
-            const d = (l?.data || "").slice(0, 7); // YYYY-MM
+            const d = (l?.data || "").slice(0, 7);
             if (d && d.length === 7) set.add(d);
         }
-        return Array.from(set).sort().reverse(); // mais recente primeiro
+        return Array.from(set).sort().reverse();
     }, [lancamentos]);
 
     const lancamentosFiltrados = useMemo(() => {
@@ -133,9 +133,9 @@ export default function App() {
         return { receitas, despesas, saldo: receitas - despesas };
     }, [mesRef, resumo, lancamentosFiltrados]);
 
-    // modal
+
     const [open, setOpen] = useState(false);
-    const [editId, setEditId] = useState(null); // null = criando, number = editando
+    const [editId, setEditId] = useState(null);
     const [tipo, setTipo] = useState("DESPESA");
     const [categoria, setCategoria] = useState("ALIMENTACAO");
     const [descricao, setDescricao] = useState("");
@@ -156,7 +156,7 @@ export default function App() {
     async function carregarDados({ silent = false } = {}) {
         if (!silent) setMsg("");
 
-        // blindagem: se token sumiu/expirou
+
         const token = getToken();
         if (!token) {
             setMsg("Sua sessão expirou. Faça login novamente.");
@@ -179,7 +179,7 @@ export default function App() {
             setLancamentos(Array.isArray(list) ? list : []);
             ok = true;
         } catch (e) {
-            // se api.js detectar 401/403, ele limpa o token e joga erro de sessão
+
             if (!getToken()) {
                 setLogged(false);
             }
@@ -192,7 +192,7 @@ export default function App() {
 
     useEffect(() => {
         if (logged) carregarDados({ silent: true });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, [logged]);
 
     async function onLogin(e) {
@@ -352,7 +352,7 @@ export default function App() {
         const id = l?.id;
         if (!id) return;
 
-        // ✅ confirmação antes de deletar
+
         const ok = window.confirm(`Excluir "${l?.descricao || "lançamento"}"?`);
         if (!ok) return;
 
@@ -371,7 +371,7 @@ export default function App() {
         }
     }
 
-    // ---------- UI ----------
+
     if (!logged) {
         return (
             <div className="page">

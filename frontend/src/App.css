@@ -544,8 +544,6 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     box-shadow: 0 14px 35px rgba(46,204,113,.24);
   }
 }
-
-/* ✅ Meta do mês */
 .progress{
   margin-top: 10px;
   height: 12px;
@@ -563,4 +561,18 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
 }
 .progress.danger .progressBar{
   background: linear-gradient(135deg, var(--red), var(--red2));
+}
+.listHeader{
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.headerActions{
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.monthSelect{
+  max-width: 100%;
+  min-width: 0;
 }
