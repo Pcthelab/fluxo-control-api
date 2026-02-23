@@ -936,3 +936,33 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     width: 190px;
   }
 }
+
+
+.left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.leftActions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-left:14px;
+}
+
+.rightMenu{
+  position:relative;
+}
+
+
+@media (max-width: 520px){
+  .left{
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .leftActions{
+    margin-left:0;
+  }
+}

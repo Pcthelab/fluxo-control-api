@@ -430,70 +430,87 @@ export default function App() {
         <div className="page">
             <div className="shell">
                 <header className="topbar">
-                    <div className="left">
-                        <div className="appBadge small">FC</div>
-                        <div className="brandSmall">
-                            <span className="brandA">Fluxo</span> <span className="brandB">Control</span>
-                            <div className="subtitle small">{lastUpdated ? `Atualizado ${horaMin(lastUpdated)}` : "Bem-vindo"}</div>
-                        </div>
-                    </div>
+                        <div className="left">
+                            <div className="appBadge small">FC</div>
 
-                    <div className="right" style={{ position: "relative" }}>
-                        <button className="ghost" onClick={() => carregarDados()} disabled={loading} title="Recarregar dados">
-                            {loading ? "Atualizando..." : "Atualizar"}
-                        </button>
+                            <div className="brandSmall">
+                                <span className="brandA">Fluxo</span>{" "}
+                                <span className="brandB">Control</span>
+                                <div className="subtitle small">
+                                    {lastUpdated ? `Atualizado ${horaMin(lastUpdated)}` : "Bem-vindo"}
+                                </div>
+                            </div>
 
-                        {/* ✅ Menu (substitui o botão Dashboard) */}
-                        <button className="ghost secondary menuBtn" type="button" onClick={() => setMenuOpen((v) => !v)} title="Menu">
-                            ☰
-                        </button>
 
-                        {menuOpen ? (
-                            <div className="menuDropdown" onMouseDown={(e) => e.preventDefault()}>
+                            <div className="leftActions">
                                 <button
-                                    className="menuItem"
-                                    type="button"
-                                    onClick={() => {
-                                        setView("home");
-                                        setMenuOpen(false);
-                                    }}
+                                    className="ghost"
+                                    onClick={() => carregarDados()}
+                                    disabled={loading}
+                                    title="Recarregar dados"
                                 >
-                                    Home
+                                    {loading ? "Atualizando..." : "Atualizar"}
                                 </button>
 
-                                <button
-                                    className="menuItem"
-                                    type="button"
-                                    onClick={() => {
-                                        setView("dash");
-                                        setMenuOpen(false);
-                                    }}
-                                >
-                                    Dashboard
-                                </button>
-
-                                <button
-                                    className="menuItem"
-                                    type="button"
-                                    onClick={() => {
-                                        exportarCSV();
-                                        setMenuOpen(false);
-                                    }}
-                                >
-                                    Exportar CSV
+                                <button className="danger" onClick={sair}>
+                                    Sair
                                 </button>
                             </div>
-                        ) : null}
+                        </div>
 
-                        <button className="danger" onClick={sair}>
-                            Sair
-                        </button>
-                    </div>
-                </header>
+
+                        <div className="rightMenu">
+                            <button
+                                className="ghost secondary menuBtn"
+                                type="button"
+                                onClick={() => setMenuOpen((v) => !v)}
+                                title="Menu"
+                            >
+                                ☰
+                            </button>
+
+                            {menuOpen ? (
+                                <div className="menuDropdown">
+                                    <button
+                                        className="menuItem"
+                                        type="button"
+                                        onClick={() => {
+                                            setView("home");
+                                            setMenuOpen(false);
+                                        }}
+                                    >
+                                        Home
+                                    </button>
+
+                                    <button
+                                        className="menuItem"
+                                        type="button"
+                                        onClick={() => {
+                                            setView("dash");
+                                            setMenuOpen(false);
+                                        }}
+                                    >
+                                        Dashboard
+                                    </button>
+
+                                    <button
+                                        className="menuItem"
+                                        type="button"
+                                        onClick={() => {
+                                            exportarCSV();
+                                            setMenuOpen(false);
+                                        }}
+                                    >
+                                        Exportar CSV
+                                    </button>
+                                </div>
+                            ) : null}
+                        </div>
+                    </header>
 
                 {msg ? <div className="msg wide">{msg}</div> : null}
 
-                {/* ✅ Resumo compacto (3 em 1 card) */}
+
                 <section className="card summaryCard">
                     <div className="summaryRow">
                         <div className="summaryLabel">Saldo</div>
@@ -515,7 +532,7 @@ export default function App() {
                     </div>
                 </section>
 
-                {/* ✅ Meta do mês */}
+
                 <section className="card listCard metaCard" style={{ marginTop: 14, marginBottom: 16 }}>
                     <div className="listHeader metaHeader">
                         <div>
