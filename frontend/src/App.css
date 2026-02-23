@@ -643,3 +643,46 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     opacity: 1;
   }
 }
+
+.listActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+
+.addInline{
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  border: 0;
+  cursor: pointer;
+  font-size: 28px;
+  font-weight: 950;
+  line-height: 0;
+  color: #fff;
+  background: linear-gradient(135deg, var(--green), var(--green2));
+  box-shadow: 0 18px 45px rgba(46,204,113,.25);
+  flex: 0 0 auto;
+}
+
+.addInline:active{
+  transform: translateY(1px);
+}
+
+
+@media (max-width: 520px){
+  .listActions{
+    gap: 8px;
+  }
+  .monthSelect{
+    max-width: 170px;
+  }
+  .addInline{
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    font-size: 26px;
+  }
+}
