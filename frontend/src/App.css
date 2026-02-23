@@ -474,6 +474,34 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   margin-top: 0;
 }
 
+.ghost{
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,.70);
+  padding:10px 14px;
+  border-radius: 14px;
+  font-weight:900;
+  cursor:pointer;
+
+  color: rgba(15,26,20,.85);
+  text-decoration:none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all .15s ease;
+}
+
+.ghost.secondary{
+  background: rgba(0,0,0,.06);
+}
+
+.ghost:hover{
+  background: rgba(255,255,255,.95);
+}
+
+.ghost:active{
+  transform: translateY(1px);
+}
+
 /* Responsivo */
 @media (max-width: 920px){
   .container{ padding: 18px 12px; }

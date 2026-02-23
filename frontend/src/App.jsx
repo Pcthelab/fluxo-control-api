@@ -453,7 +453,7 @@ export default function App() {
                         <button className="ghost" onClick={() => carregarDados()} disabled={loading} title="Recarregar dados">
                             {loading ? "Atualizando..." : "Atualizar"}
                         </button>
-                        <button className="ghost" onClick={() => setView(view === "home" ? "dash" : "home")}>
+                        <button className="ghost secondary" onClick={() => setView(view === "home" ? "dash" : "home")}>
                             {view === "home" ? "Dashboard" : "Voltar"}
                         </button>
                         <button className="danger" onClick={sair}>
