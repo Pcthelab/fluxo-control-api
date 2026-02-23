@@ -71,10 +71,10 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState("");
 
-    // menu (substitui botões)
+
     const [menuOpen, setMenuOpen] = useState(false);
 
-    // meta mensal (localStorage)
+
     const [metaMensal, setMetaMensal] = useState(() => {
         const v = localStorage.getItem("metaMensal");
         return v ? Number(v) : 2000;
@@ -84,13 +84,13 @@ export default function App() {
         localStorage.setItem("metaMensal", String(metaMensal || 0));
     }, [metaMensal]);
 
-    // auth
+
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [logged, setLogged] = useState(!!getToken());
 
-    // home data
+
     const [resumo, setResumo] = useState({ saldo: 0, receitas: 0, despesas: 0 });
     const [lancamentos, setLancamentos] = useState([]);
     const [lastUpdated, setLastUpdated] = useState(null);
@@ -124,7 +124,7 @@ export default function App() {
         return { receitas, despesas, saldo: receitas - despesas };
     }, [mesRef, resumo, lancamentosFiltrados]);
 
-    // modal
+
     const [open, setOpen] = useState(false);
     const [editId, setEditId] = useState(null);
     const [tipo, setTipo] = useState("DESPESA");
@@ -179,7 +179,7 @@ export default function App() {
 
     useEffect(() => {
         if (logged) carregarDados({ silent: true });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, [logged]);
 
     async function onLogin(e) {
@@ -354,7 +354,7 @@ export default function App() {
         }
     }
 
-    // ---------- UI ----------
+
     if (!logged) {
         return (
             <div className="page">
