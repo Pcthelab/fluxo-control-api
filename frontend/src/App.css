@@ -598,3 +598,24 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     overflow: hidden;
   }
 }
+
+.row2 > * {
+  min-width: 0;
+}
+
+.field{
+  min-width: 0;
+}
+
+
+.field input[type="date"]{
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
+}
+
+.modal{
+  max-width: calc(100vw - 24px);
+  overflow: hidden;
+}
