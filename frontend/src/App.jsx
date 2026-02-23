@@ -429,16 +429,20 @@ export default function App() {
     return (
         <div className="page">
             <div className="shell">
-                {/* ✅ TOPBAR: SEM DUPLICAR BOTÕES */}
+
                 <header className="topbar">
                     <div className="left">
                         <div className="appBadge small">FC</div>
 
                         <div className="brandSmall">
-                            <span className="brandA">Fluxo</span> <span className="brandB">Control</span>
-                            <div className="subtitle small">{lastUpdated ? `Atualizado ${horaMin(lastUpdated)}` : "Bem-vindo"}</div>
+                            <span className="brandA">Fluxo</span>{" "}
+                            <span className="brandB">Control</span>
+                            <div className="subtitle small">
+                                {lastUpdated ? `Atualizado ${horaMin(lastUpdated)}` : "Bem-vindo"}
+                            </div>
                         </div>
                     </div>
+
                     <div className="right">
                         <div className="rightMenu">
                             <button
@@ -452,49 +456,21 @@ export default function App() {
 
                             {menuOpen ? (
                                 <div className="menuDropdown">
-                                    <button
-                                        className="menuItem"
-                                        type="button"
-                                        onClick={() => {
-                                            carregarDados();
-                                            setMenuOpen(false);
-                                        }}
-                                    >
+                                    <button className="menuItem" type="button" onClick={() => { carregarDados(); setMenuOpen(false); }}>
                                         Atualizar
                                     </button>
 
-                                    <button
-                                        className="menuItem"
-                                        type="button"
-                                        onClick={() => {
-                                            setView("dash");
-                                            setMenuOpen(false);
-                                        }}
-                                    >
+                                    <button className="menuItem" type="button" onClick={() => { setView("dash"); setMenuOpen(false); }}>
                                         Dashboard
                                     </button>
 
-                                    <button
-                                        className="menuItem"
-                                        type="button"
-                                        onClick={() => {
-                                            exportarCSV();
-                                            setMenuOpen(false);
-                                        }}
-                                    >
+                                    <button className="menuItem" type="button" onClick={() => { exportarCSV(); setMenuOpen(false); }}>
                                         Exportar CSV
                                     </button>
 
                                     <div className="menuDivider" />
 
-                                    <button
-                                        className="menuItem dangerItem"
-                                        type="button"
-                                        onClick={() => {
-                                            sair();
-                                            setMenuOpen(false);
-                                        }}
-                                    >
+                                    <button className="menuItem dangerItem" type="button" onClick={() => { sair(); setMenuOpen(false); }}>
                                         Sair
                                     </button>
                                 </div>
@@ -505,7 +481,7 @@ export default function App() {
 
                 {msg ? <div className="msg wide">{msg}</div> : null}
 
-                {/* ✅ CARD RESUMO COMPACTO */}
+
                 <section className="card summaryCard">
                     <div className="summaryRow">
                         <div className="summaryLabel">Saldo</div>

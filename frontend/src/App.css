@@ -1075,3 +1075,21 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
 .dangerItem {
   color: #b3202a;
 }
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+}
+
+.topbar .left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.topbar .right{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+}
