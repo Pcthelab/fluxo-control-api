@@ -545,33 +545,42 @@ export default function App() {
 
                 {view === "home" ? (
                     <section className="card listCard">
-                        <div className="listActions">
-                            <select
-                                className="monthSelect"
-                                value={mesRef}
-                                onChange={(e) => {
-                                    setMesRef(e.target.value);
-                                    setShowAll(false);
-                                }}
-                                title="Filtrar por mês"
-                            >
-                                <option value="ALL">Todos</option>
-                                {mesesDisponiveis.map((m) => (
-                                    <option key={m} value={m}>
-                                        {mesLabel(m)}
-                                    </option>
-                                ))}
-                            </select>
+                        <div className="listHeader">
+                            <div>
+                                <div className="h2">Últimos lançamentos</div>
+                                <div className="subtitle">
+                                    {mesRef === "ALL" ? "Toque no + pra adicionar" : `Filtrado: ${mesLabel(mesRef)}`}
+                                </div>
+                            </div>
 
-                            <button className="addInline" type="button" onClick={abrirCriacao} title="Novo lançamento">
-                                +
-                            </button>
+                            <div className="listActions">
+                                <select
+                                    className="monthSelect"
+                                    value={mesRef}
+                                    onChange={(e) => {
+                                        setMesRef(e.target.value);
+                                        setShowAll(false);
+                                    }}
+                                    title="Filtrar por mês"
+                                >
+                                    <option value="ALL">Todos</option>
+                                    {mesesDisponiveis.map((m) => (
+                                        <option key={m} value={m}>
+                                            {mesLabel(m)}
+                                        </option>
+                                    ))}
+                                </select>
 
-                            {lancamentosFiltrados.length > 8 ? (
-                                <button className="ghost" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
-                                    {showAll ? "Mostrar menos" : "Ver todos"}
+                                <button className="addInline" type="button" onClick={abrirCriacao} title="Novo lançamento">
+                                    +
                                 </button>
-                            ) : null}
+
+                                {lancamentosFiltrados.length > 8 ? (
+                                    <button className="ghost" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
+                                        {showAll ? "Mostrar menos" : "Ver todos"}
+                                    </button>
+                                ) : null}
+                            </div>
                         </div>
 
                         {lancamentosFiltrados.length === 0 ? (

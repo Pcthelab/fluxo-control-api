@@ -724,3 +724,58 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     width: 130px;
   }
 }
+
+.listHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:12px;
+}
+
+
+.listActions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:flex-end;
+}
+
+
+.listActions .monthSelect{
+  margin-right:auto;
+}
+
+
+.addInline{
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  border: 0;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--green), var(--green2));
+  box-shadow: 0 14px 35px rgba(46,204,113,.22);
+  display:grid;
+  place-items:center;
+}
+
+
+@media (max-width: 520px){
+  .listHeader{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .listActions{
+    width:100%;
+    justify-content:space-between;
+  }
+
+  .listActions .monthSelect{
+    margin-right:0;
+    flex:1;
+  }
+}
