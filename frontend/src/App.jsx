@@ -487,13 +487,13 @@ export default function App() {
                                 <div className="subtitle">{mesRef === "ALL" ? "Toque no + pra adicionar" : `Filtrado: ${mesLabel(mesRef)}`}</div>
                             </div>
 
-                            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                            <div className="headerActions">
                                 <select
                                     className="monthSelect"
                                     value={mesRef}
                                     onChange={(e) => {
                                         setMesRef(e.target.value);
-                                        setShowAll(false); // ✅ ao mudar mês, volta pro modo compacto
+                                        setShowAll(false);
                                     }}
                                     title="Filtrar por mês"
                                 >
@@ -505,7 +505,10 @@ export default function App() {
                                     ))}
                                 </select>
 
-                                {/* ✅ Ver todos / Mostrar menos */}
+                                <button className="addMini" onClick={abrirCriacao} title="Novo lançamento">
+                                    +
+                                </button>
+
                                 {lancamentosFiltrados.length > 8 ? (
                                     <button className="ghost" type="button" onClick={() => setShowAll((v) => !v)} title="Alternar quantidade">
                                         {showAll ? "Mostrar menos" : "Ver todos"}
@@ -589,10 +592,6 @@ export default function App() {
                         )}
                     </section>
                 )}
-
-                <button className="fab" onClick={() => abrirCriacao()} title="Novo lançamento">
-                    +
-                </button>
 
                 {open ? (
                     <div className="modalOverlay" onMouseDown={() => fecharModal()}>

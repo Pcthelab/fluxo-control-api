@@ -497,4 +497,23 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
   .tableHeader{
     display:none;
   }
+  .headerActions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-shrink:0;
+  }
+
+  .addMini{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    border: 0;
+    color: white;
+    font-size: 26px;
+    font-weight: 900;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--green), var(--green2));
+    box-shadow: 0 14px 35px rgba(46,204,113,.24);
+  }
 }
