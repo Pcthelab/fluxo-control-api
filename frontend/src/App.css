@@ -646,9 +646,10 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
 
 .listActions{
   display:flex;
-  gap:10px;
+  gap:12px;
   align-items:center;
   justify-content:flex-end;
+  flex-wrap:nowrap;
 }
 
 
@@ -677,12 +678,19 @@ input:focus, select:focus{ box-shadow: 0 0 0 4px rgba(46,204,113,.14); }
     gap: 8px;
   }
   .monthSelect{
-    max-width: 170px;
+    flex: 0 0 auto;
+    width: 150px;
+    max-width: 50vw;
   }
   .addInline{
     width: 46px;
     height: 46px;
     border-radius: 16px;
     font-size: 26px;
+  }
+}
+@media (max-width: 420px) {
+  .monthSelect {
+    width: 130px;
   }
 }
