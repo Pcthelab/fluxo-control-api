@@ -46,7 +46,7 @@ body{
   backdrop-filter: blur(12px);
 }
 
-/* ===== Auth ===== */
+
 .authCard{
   width:min(420px, 100%);
   padding:22px;

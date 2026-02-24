@@ -200,7 +200,7 @@ export default function App() {
             return;
         }
 
-        // se estiver sem internet, nem tenta
+
         if (!navigator.onLine) {
             setIsOffline(true);
             setMsg("Sem internet. Assim que voltar eu atualizo sozinho.");
@@ -227,7 +227,7 @@ export default function App() {
                 return;
             }
 
-            // se cair a internet no meio
+
             if (!navigator.onLine) {
                 setIsOffline(true);
                 setMsg("Sem internet. Assim que voltar eu atualizo sozinho.");
