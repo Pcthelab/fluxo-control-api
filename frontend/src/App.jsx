@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import api, { setToken, clearToken, getToken } from "./api";
 import "./App.css";
 
@@ -70,6 +70,52 @@ export default function App() {
     const [view, setView] = useState("home");
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState("");
+    const [autoRetrying, setAutoRetrying] = useState(false);
+    const [isOffline, setIsOffline] = useState(!navigator.onLine);
+
+    function isAuthOrNetworkError(err) {
+        const msg = String(err?.message || "").toLowerCase();
+        return (
+            msg.includes("403") ||
+            msg.includes("401") ||
+            msg.includes("jwt") ||
+            msg.includes("token") ||
+            msg.includes("network") ||
+            msg.includes("failed to fetch")
+        );
+    }
+
+    useEffect(() => {
+        function onOnline() {
+            setIsOffline(false);
+
+            retryRef.current.count = 0;
+            setMsg("Conexão voltou ✅ Atualizando...");
+            setAutoRetrying(true);
+
+            carregarDados({ silent: true })
+                .then(() => setMsg(""))
+                .catch(() => {})
+                .finally(() => setAutoRetrying(false));
+        }
+
+        function onOffline() {
+            setIsOffline(true);
+            setMsg("Sem internet. Assim que voltar eu atualizo sozinho.");
+        }
+
+        window.addEventListener("online", onOnline);
+        window.addEventListener("offline", onOffline);
+
+        return () => {
+            window.removeEventListener("online", onOnline);
+            window.removeEventListener("offline", onOffline);
+        };
+
+    }, []);
+
+
+    const retryRef = useRef({ count: 0, last: 0 });
 
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -154,6 +200,13 @@ export default function App() {
             return;
         }
 
+        // se estiver sem internet, nem tenta
+        if (!navigator.onLine) {
+            setIsOffline(true);
+            setMsg("Sem internet. Assim que voltar eu atualizo sozinho.");
+            return;
+        }
+
         setLoading(true);
         let ok = false;
 
@@ -169,11 +222,52 @@ export default function App() {
             setLancamentos(Array.isArray(list) ? list : []);
             ok = true;
         } catch (e) {
-            if (!getToken()) setLogged(false);
-            setMsg(e?.message || "Erro ao carregar");
+            if (!getToken()) {
+                setLogged(false);
+                return;
+            }
+
+            // se cair a internet no meio
+            if (!navigator.onLine) {
+                setIsOffline(true);
+                setMsg("Sem internet. Assim que voltar eu atualizo sozinho.");
+                return;
+            }
+
+            const now = Date.now();
+            const canRetry =
+                isAuthOrNetworkError(e) &&
+                retryRef.current.count < 1 &&
+                now - retryRef.current.last > 4000;
+
+            if (canRetry) {
+                retryRef.current.count += 1;
+                retryRef.current.last = now;
+
+                setAutoRetrying(true);
+                setMsg("Conexão instável... tentando reconectar.");
+
+                setTimeout(async () => {
+                    try {
+                        await carregarDados({ silent: true });
+                        setMsg("");
+                    } finally {
+                        setAutoRetrying(false);
+                    }
+                }, 1200);
+
+                return;
+            }
+
+            setAutoRetrying(false);
+            setMsg(e?.message || "Não consegui atualizar agora. Tenta de novo em alguns segundos.");
         } finally {
             setLoading(false);
-            if (ok) setLastUpdated(new Date());
+            if (ok) {
+                setLastUpdated(new Date());
+                retryRef.current.count = 0;
+                setIsOffline(false);
+            }
         }
     }
 
@@ -449,11 +543,14 @@ export default function App() {
                                         className="menuItem"
                                         type="button"
                                         onClick={() => {
+                                            retryRef.current.count = 0;
+                                            setMsg("");
                                             carregarDados();
                                             setMenuOpen(false);
                                         }}
+                                        disabled={loading || autoRetrying}
                                     >
-                                        Atualizar
+                                        {loading || autoRetrying ? "Atualizando..." : "Atualizar"}
                                     </button>
 
                                     <button
