@@ -1,6 +1,10 @@
 <div align="center">
+  <img src="fluxo.png" alt="Preview" width="800"/>
+</div>
 
-# ⚡ Fluxo Control
+<div align="center">
+
+  # ⚡ Fluxo Control
 
 **Personal Finance SaaS — Built to last, not just to work.**
 
