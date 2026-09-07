@@ -2,6 +2,10 @@
 FROM eclipse-temurin:21-jdk-jammy AS build
 WORKDIR /app
 COPY . .
+
+# CORREÇÃO: Dá permissão de execução ao Maven Wrapper
+RUN chmod +x mvnw
+
 RUN ./mvnw clean package -DskipTests
 
 # Etapa 2: Execução da aplicação
